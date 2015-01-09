@@ -1,4 +1,4 @@
-# Server initialisation using bash scripts
+# Automated server initialisation using bash
 
 ## ec2
 
