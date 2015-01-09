@@ -9,6 +9,9 @@ if [ ! -f $1 ]; then
 	exit 2
 fi
 
+FILENAME=$(basename $1)
+CLIENTNAME=${FILENAME%.*}
+
 adduser $CLIENTNAME --disabled-password --group www-data --quiet
 echo "$CLIENTNAME" >> /etc/nginx/brightflair-client-sites/list
 cp -r ~/init/src/ec2-web/cfg /home/$CLIENTNAME/cfg
