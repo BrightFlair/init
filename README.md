@@ -6,12 +6,11 @@ To use this repository when launching a new instance, paste the following user d
 
 ```
 #!/usr/bin/env bash
-curl -sS http://init.brightflair.com/INIT-TYPE | bash
+INIT_TYPE=ec2-web
+curl -sS http://init.brightflair.com/go | bash
 ```
 
-Substitute INIT-TYPE with one of the following:
-
-* ec2-web
+Substitute INIT_TYPE with one of the following init scripts within this repository.
 
 For more information: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html
 
