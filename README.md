@@ -6,8 +6,7 @@ To use this repository when launching a new instance, paste the following user d
 
 ```
 #!/usr/bin/env bash
-INIT_TYPE=ec2-web
-curl -sS http://init.brightflair.com/go | bash
+curl -LO http://init.brightflair.com/init && bash init INIT_TYPE
 ```
 
 Substitute INIT_TYPE with one of the following init scripts within this repository.
