@@ -1,4 +1,4 @@
-# Automated server initialisation using bash
+# AWS server initialisation
 
 ## ec2
 
