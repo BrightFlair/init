@@ -1,10 +1,10 @@
+#!/usr/bin/env bash
 apt-get update
 apt-get upgrade
-apt-get install git
-#cp -R .cfg from within git repo
-#untar
+apt-get install -y git-core
+cd
+git clone git@github.com:BrightFlair/init
 
-# WEBSERVER SETUP
 apt-get install -y nginx php5-fpm php5-curl php5-cli php5-common php5-gd php5-imagick php5-json php5-mysql php5-sqlite
 mkdir /etc/nginx/brightflair-client-sites
 echo "include /etc/nginx/brightflair-client-sites/*.conf;" > brightflair.conf

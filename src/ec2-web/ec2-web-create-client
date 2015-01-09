@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+if [ $# -eq 0]; then
+	echo "Usage: $0 clientname.pub"
+	echo "Provide the client's public key file. File name is used for new unix user."
+
+if [ ! -f $1 ]; then
+	echo "Error: No public key provided. Usage: $0 clientname.pub"
+	exit 2
+fi
+
+FILENAME=$(basename $1)
+CLIENTNAME=${FILENAME%.*}
+
+adduser $CLIENTNAME --disabled-password --group www-data --quiet
+echo "$CLIENTNAME" >> /etc/nginx/brightflair-client-sites/list
+cp -r ~/init/src/ec2-web/cfg /home/$CLIENTNAME/cfg
