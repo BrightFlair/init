@@ -1,8 +1,8 @@
 # Bright Flair server repo
-Deployment scripts
+EC2 initialisation scripts
 
-On a blank AMI, run the following to deploy a Bright Flair server:
+When launching a new EC2 instance, paste the following user data in step 3:
 
 ```
-curl -sS http://init-web.srv.brightflair.com | bash
+curl -sS http://ec2-web.init.brightflair.com | bash
 ```
