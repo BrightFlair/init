@@ -4,6 +4,7 @@ EC2 initialisation scripts
 To use this repository when launching a new EC2 instance, paste the following user data in step 3:
 
 ```
+#!/usr/bin/env bash
 curl -sS http://init.brightflair.com/ec2-web | bash
 ```
 
