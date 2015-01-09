@@ -1,0 +1,57 @@
+#!/usr/bin/env php
+<?php
+chdir(__DIR__);
+
+$cfgDirBase = "/home/{user}/.cfg/sites-enabled";
+$incBase = "include {path};" . PHP_EOL;
+
+// Loop over every user listed in the `list` file.
+foreach(file("list") as $user) {
+        $user = trim($user);
+        // The file that should represent all of their vhosts ends with .conf.
+        $confFile = "$user.conf";
+        if(is_file($confFile)) {
+                unlink($confFile);
+        }
+        // Dir is the absolute path to the user's sites-enabled directory.
+        $dir = str_replace("{user}", $user, $cfgDirBase);
+
+        if(!is_dir($dir)) {
+                echo "Skipping $dir (not a directory)\n";
+                continue;
+        }
+
+        // $confLines represents a list of all correctly-syntaxed
+        // vhost paths (files within sites-enabled).
+        $confLines = [];
+
+        // Loop over all files in the sites-enabled directory.
+        foreach(new DirectoryIterator($dir) as $fileInfo) {
+                if($fileInfo->isDot()) {
+                        continue;
+                }
+
+                // Full file path of sites-enabled entry file.
+                $pathname = $fileInfo->getPathname();
+                $inc = str_replace("{path}", $pathname, $incBase);
+
+                // Add current path's include string to the end of the array.
+                array_push($confLines, $inc);
+
+                file_put_contents($confFile, $confLines);
+                $testResult = exec("nginx -t 2>&1", $testOutput);
+
+/*
+TODO: Remove config line from file if failed...
+                if(!strstr($testOutput[0], "syntax is ok")) {
+                        // Remove the broken file from the array (and the file).
+                        echo "Skipping $pathname..." . PHP_EOL;
+                        array_pop($confLines);
+                        file_put_contents($confFile, $confLines);
+                }
+*/
+        }
+}
+
+exec("nginx -s reload");
+echo "Reloaded webserver.\n";
