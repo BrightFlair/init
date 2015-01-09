@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 apt-get update
-apt-get upgrade
+apt-get upgrade -y
 apt-get install -y git-core
 cd
 git clone git@github.com:BrightFlair/init
