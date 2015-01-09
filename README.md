@@ -1,4 +1,4 @@
-# Bright Flair server initialisation repo
+# Server initialisation using bash scripts
 
 ## ec2
 
