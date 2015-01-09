@@ -6,4 +6,4 @@ apt-get install -y git-core
 cd
 git clone http://github.com/BrightFlair/init
 cd init
-src/$INIT_TYPE/init-$INIT_TYPE
+src/$1/init-$1
