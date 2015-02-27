@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+mkdir /etc/nginx/client-sites
+echo "include /etc/nginx/client-sites/*.conf;" > load-client-sites.conf

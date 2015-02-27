@@ -6,4 +6,5 @@ apt-get install -y git-core
 cd
 git clone http://github.com/BrightFlair/init
 cd init
-src/$1/init-$1
+#src/$1/000-thing
+touch ~/$1.initWorked
