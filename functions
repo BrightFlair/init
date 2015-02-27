@@ -110,8 +110,8 @@ function isServerRunning() {
 	)
 
 	if [ $STATE = "running" ] ; then
-		return "running"
+		return 0
 	else
-		return "not running"
+		return 1
 	fi
 }
