@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+curl http://init.brightflair.com/init | bash -s INIT_TYPE
