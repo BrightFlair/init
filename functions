@@ -37,6 +37,7 @@ function launchInstance() {
 
 	LAST_LAUNCHED_INSTANCE_ID=$INSTANCE_ID
 	tagResource "$INSTANCE_ID" "Name" "$HOSTNAME"
+	rm $USER_DATA_TEMP
 	echo $INSTANCE_ID
 }
 
