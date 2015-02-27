@@ -12,7 +12,7 @@ To use this repository when launching a new instance, paste the following user d
 
 ```
 #!/usr/bin/env bash
-curl -LO http://init.brightflair.com | bash INIT_TYPE
+curl http://init.brightflair.com | bash -s INIT_TYPE
 ```
 
 Substitute INIT_TYPE with one of the following init scripts within this repository.
