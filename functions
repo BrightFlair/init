@@ -21,8 +21,8 @@ function launchInstance() {
 	local INSTANCE_TYPE=$4
 	local SECURITY_GROUP_ID=$5
 
-	local USER_DATA=$(sed -e s/INIT_TYPE/$INIT_TYPE/g user-data)
-	local USER_DATA_BASE64=$(echo -e $USER_DATA | base64)
+	local USER_DATA_TEMP=$(mktemp)
+	sed -e s/INIT_TYPE/$INIT_TYPE/g user-data > $USER_DATA_TEMP
 
 	local INSTANCE_ID=$(aws ec2 run-instances \
 		--image-id "$AMI_ID" \
@@ -30,15 +30,13 @@ function launchInstance() {
 		--instance-type "$INSTANCE_TYPE" \
 		--security-group-ids "$SECURITY_GROUP_ID" \
 		--associate-public-ip-address \
-		--user-data "$USER_DATA_BASE64"
+		--user-data "$USER_DATA_TEMP" \
 		--query "Instances[0].InstanceId" \
 		--output text \
 	)
 
 	LAST_LAUNCHED_INSTANCE_ID=$INSTANCE_ID
-
 	tagResource "$INSTANCE_ID" "Name" "$HOSTNAME"
-
 	echo $INSTANCE_ID
 }
 
@@ -66,8 +64,7 @@ function tagResource() {
 		--output text \
 	)
 
-	if [ $RESULT == "true" ]
-	then
+	if [ $RESULT == "true" ] ; then
 		return 0
 	else
 		return 1
