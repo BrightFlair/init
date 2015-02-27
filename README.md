@@ -2,13 +2,13 @@
 
 Scripts to automate deployment of different types of AWS infrastructure.
 
-Each INIT_TYPE has its own directory within the repository, containing at least an `_init` script.
+Each INIT_TYPE has its own directory within the repository, containing numerically-ordered initialisation scripts and optional scripts to be added to the PATH.
 
-`_init` will be run, then all non-numerical scripts will be added to the PATH, followed by execution of any numbered scripts (`001-do-something`, `002-do-something-else`).
+After running `init`, the INIT_TYPE's non-numeric scripts will be added to the PATH for all users, then the root user will begin to execute the numeric scripts.
 
 ## ec2
 
-To use this repository when launching a new instance, paste the following user data into step 3:
+To use this repository when launching a new instance, paste the following user data into step 3 of ec2's server initialisation screen:
 
 ```
 #!/usr/bin/env bash
