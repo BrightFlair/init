@@ -10,19 +10,39 @@
 function launchInstance() {
 	set -e
 
-	if [ $# -ne 5 ]
-	then
-		echo "$0 requires 5 parameters: HOSTNAME, AMI_ID, KEY_NAME, INSTANCE_TYPE, SECURITY_GROUP_ID"
+	if [ $# -lt 1 ] ; then
+		echo "$0 requires at least one parameter, the hostname"
 		exit 1
 	fi
+
+	# Defaults:
+	local INIT_TYPE_DEFAULT="ec2-web"
+	local AMI_ID="ami-234ecc54" # Ubuntu Server 14.04 LTS (HVM), SSD Volume Type
+	local KEY_NAME="BrightFlair-Admin"
+	local INSTANCE_TYPE="t2.micro"
+	local SECURITY_GROUP_ID="sg-2765d142"
+
 	local HOSTNAME=$1
-	local AMI_ID=$2
-	local KEY_NAME=$3
-	local INSTANCE_TYPE=$4
-	local SECURITY_GROUP_ID=$5
+
+	if [ -z "$INIT_TYPE" ] ; then
+		local INIT_TYPE=$INIT_TYPE_DEFAULT
+	fi
+	if [ -z "$2"] ; then
+		local AMI_ID=$2
+	fi
+	if [ -z "$3" ] ; then
+		local KEY_NAME=$3
+	fi
+	if [ -z "$4" ] ; then
+		local INSTANCE_TYPE=$4
+	fi
+	if [ -z "$5" ] ; then
+		local SECURITY_GROUP_ID=$5
+	fi
 
 	local USER_DATA_TEMP=$(mktemp)
 	sed -e s/INIT_TYPE/$INIT_TYPE/g user-data > $USER_DATA_TEMP
+	echo "Using temp data file: $USER_DATA_TEMP"
 
 	local INSTANCE_ID=$(aws ec2 run-instances \
 		--image-id "$AMI_ID" \
