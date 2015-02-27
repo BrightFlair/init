@@ -1,4 +1,2 @@
 #!/usr/bin/env bash
 apt-get install -y nginx php5-fpm php5-curl php5-cli php5-common php5-gd php5-imagick php5-json php5-mysql php5-sqlite
-mkdir /etc/nginx/brightflair-client-sites
-echo "include /etc/nginx/brightflair-client-sites/*.conf;" > brightflair.conf
