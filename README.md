@@ -1,5 +1,9 @@
 # AWS server initialisation
 
+Scripts to automate deployment of different types of AWS infrastructure.
+
+Each INIT_TYPE has its own directory within the repository, containing at least an `_init` script.
+
 ## ec2
 
 To use this repository when launching a new instance, paste the following user data into step 3:
