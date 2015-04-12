@@ -2,8 +2,13 @@
 echo -e "\n\nInstalling packages...\n\n"
 apt-get update
 apt-get install -y \
-  git iptables wget \
+  # Security 
+  iptables fail2ban \
+  # Tools
+  git wget \
+  # Webserver
   nginx php5-fpm php5-curl php5-cli php5-common php5-gd php5-imagick php5-json php5-mysql php5-sqlite php5-intl \
+  # Database
   mysql-client 
 echo -e "\n\nAll packages installed.\n"
 echo -e "Upgrading packages...\n\n"
