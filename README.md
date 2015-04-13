@@ -26,20 +26,7 @@ aws ec2 run-instances
     --instance-type t2.micro
 ```
 
-### ec2
-
-#### CLI initilisation
-
-Clone this repo, then run:
-
-```
-INIT_TYPE="init-type" # Change value in quotes.
-source functions
-launchInstance my-hostname i-12345 key-name t1.binky sg-12345
-waitForLaunch # Uses the last-launched resource ID
-```
-
-#### Web initilisation
+### Web initilisation
 
 To use this repository when launching a new instance, paste the following user data into step 3 of ec2's server initialisation screen:
 
@@ -51,3 +38,24 @@ curl http://init.brightflair.com/init | bash -s INIT_TYPE
 Substitute INIT_TYPE with one of the following init scripts within this repository.
 
 For more information: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html
+
+### CLI initilisation
+
+#### Automatic
+
+To get a new instance with default settings, clone this repo, then run:
+
+```
+./init INIT_TYPE # Change value to one of the available init types.
+```
+
+#### Manual
+
+Clone this repo, then run:
+
+```
+INIT_TYPE="init-type" # Change value in quotes.
+source functions
+launchInstance my-hostname i-12345 key-name t1.binky sg-12345
+waitForLaunch # Uses the last-launched resource ID
+```
