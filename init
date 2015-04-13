@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
+# Stop on any error.
 set -e
-apt-get update
-apt-get upgrade -y
-apt-get install -y git-core
+apt-get install -y git
 cd
 git clone http://github.com/BrightFlair/init
 cd init
-#src/$1/000-thing
 touch ~/$1.initWorked
