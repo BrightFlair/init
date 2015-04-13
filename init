@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
 # Stop on any error.
 set -e
-apt-get install -y git
+# Ensure home directory is current working directory.
 cd
-git clone http://github.com/BrightFlair/init
+# Download a tarball of the latest init repository.
+curl -Lo init.tar.gz https://github.com/BrightFlair/init/tarball/master
+# Extract the tarball to init directory.
 cd init
+tar -xf ../init.tar.gz
+mv */* .
+# Leave a file here to show it has worked:
 touch ~/$1.initWorked
