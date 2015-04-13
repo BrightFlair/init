@@ -43,6 +43,8 @@ function launchInstance() {
 	local USER_DATA_TEMP=$(mktemp)
 	sed -e s/INIT_TYPE/$INIT_TYPE/g user-data > $USER_DATA_TEMP
 	echo "Using temp data file: $USER_DATA_TEMP"
+	
+	USER_DATA_BASE64=$(cat $USER_DATA_TEMP | base64)
 
 	local INSTANCE_ID=$(aws ec2 run-instances \
 		--image-id "$AMI_ID" \
@@ -50,7 +52,7 @@ function launchInstance() {
 		--instance-type "$INSTANCE_TYPE" \
 		--security-group-ids "$SECURITY_GROUP_ID" \
 		--associate-public-ip-address \
-		--user-data "$USER_DATA_TEMP" \
+		--user-data "$USER_DATA_BASE64" \
 		--query "Instances[0].InstanceId" \
 		--output text \
 	)
