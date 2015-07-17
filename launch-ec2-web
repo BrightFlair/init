@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-if [ $# -lt 1 ] ; then
-	echo "$0 requires 1 parameter: hostname"
-	exit 1
-fi
-
-source ./functions
-launchInstance $1
