@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-set -e
-echo -e "\n\nInstalling packages...\n\n"
-apt-get update
-apt-get install -y \
-  nginx php5-fpm php5-curl php5-cli php5-common php5-gd php5-imagick php5-json php5-mysql php5-sqlite php5-intl \
-  mysql-client 
-echo -e "\n\nAll packages installed.\n\n"
