@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 set -e
-apt-get update
-apt-get upgrade -y
-apt-get install -y git-core
-cd
-git clone http://github.com/BrightFlair/init
-cd init
-#src/$1/000-thing
+# Get location of current script.
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 touch ~/$1.initWorked
