@@ -31,7 +31,7 @@ do
   cp $file /etc/local/runonce.d/
 done
 
-echo "@reboot /usr/local/bin/runonce" | tee -a /var/spool/cron/root
+{ crontab -l; echo "@reboot /usr/local/bin/runonce"; } | crontab -
 
 NOW=`date "+%Y-%m-%d %X"`
 echo "$NOW Added $SERVER_TYPE scripts to next boot. Running common scripts..."
