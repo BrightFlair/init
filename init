@@ -1,5 +1,57 @@
 #!/usr/bin/env bash
 set -e
+
+export SERVER_TYPE=$1
+export SERVER_NAME=$2
+
 # Get location of current script.
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-touch ~/$1.$2.initWorked
+touch ~/$SERVER_TYPE.$SERVER_NAME.init
+
+NOW=`date "+%Y-%m-%d %X"`
+echo "$NOW Started. Updating APT..."
+apt-get update && apt-get upgrade
+apt-get install -y wget git
+
+NOW=`date "+%Y-%m-%d %X"`
+echo "$NOW Updated APT. Cloning init..."
+
+git clone https://github.com/BrightFlair/init.git
+
+NOW=`date "+%Y-%m-%d %X"`
+echo "$NOW Cloned init. Running start scripts..."
+
+fileList=`ls init/src/_start/*.sh`
+for file in $fileList
+do
+  NOW=`date "+%Y-%m-%d %X"`
+  echo "$NOW $file"
+  ./$file
+done
+
+NOW=`date "+%Y-%m-%d %X"`
+echo "$NOW Cloned init. Running $SERVER_TYPE scripts..."
+
+fileList=`ls init/src/$SERVER_TYPE/*.sh`
+for file in $fileList
+do
+  NOW=`date "+%Y-%m-%d %X"`
+  echo "$NOW $file"
+  ./$file
+done
+
+NOW=`date "+%Y-%m-%d %X"`
+echo "$NOW Complete! Running end scripts."
+
+fileList=`ls init/src/_end/*.sh`
+for file in $fileList
+do
+  NOW=`date "+%Y-%m-%d %X"`
+  echo "$NOW $file"
+  ./$file
+done
+
+NOW=`date "+%Y-%m-%d %X"`
+echo "$NOW Complete! Rebooting."
+
+reboot
