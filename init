@@ -10,7 +10,7 @@ touch ~/$SERVER_TYPE.$SERVER_NAME.init
 
 NOW=`date "+%Y-%m-%d %X"`
 echo "$NOW Started. Updating APT..."
-apt-get update && apt-get upgrade
+apt-get update && apt-get upgrade -y
 apt-get install -y wget git
 
 NOW=`date "+%Y-%m-%d %X"`
