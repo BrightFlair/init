@@ -1,5 +1,44 @@
-#!/usr/bin/env bash
+#!/bin/bash
 set -e
+
+export SERVER_TYPE=$1
+export SERVER_NAME=$2
+
 # Get location of current script.
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-touch ~/$1.$2.initWorked
+touch ~/$SERVER_TYPE.$SERVER_NAME.init
+
+NOW=`date "+%Y-%m-%d %X"`
+echo "$NOW Started. Updating APT..."
+apt-get update && apt-get upgrade
+apt-get install -y wget git
+
+NOW=`date "+%Y-%m-%d %X"`
+echo "$NOW Updated APT. Cloning init..."
+
+git clone https://github.com/BrightFlair/init.git
+
+NOW=`date "+%Y-%m-%d %X"`
+echo "$NOW Cloned init. Adding $SERVER_TYPE scripts to next boot..."
+
+cp runonce /usr/local/bin/runonce
+mkdir -p /etc/local/runonce.d/ran
+
+for file in init/src/$SERVER_TYPE/*.sh
+do
+  NOW=`date "+%Y-%m-%d %X"`
+  echo "$NOW $file"
+  cp $file /etc/local/runonce.d/
+done
+
+echo "@reboot /usr/local/bin/runonce" | tee -a /var/spool/cron/root
+
+NOW=`date "+%Y-%m-%d %X"`
+echo "$NOW Added $SERVER_TYPE scripts to next boot. Running common scripts..."
+
+for file in init/src/_common/*.sh
+do
+  NOW=`date "+%Y-%m-%d %X"`
+  echo "$NOW $file"
+  ./$file
+done
