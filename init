@@ -2,4 +2,4 @@
 set -e
 # Get location of current script.
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-touch ~/$1.initWorked
+touch ~/$1.$2.initWorked
