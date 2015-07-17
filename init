@@ -8,6 +8,10 @@ export SERVER_NAME=$2
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 touch ~/$SERVER_TYPE.$SERVER_NAME.init
 
+echo "-------------------------------------------------------------------------------"
+whoami
+echo "-------------------------------------------------------------------------------"
+
 NOW=`date "+%Y-%m-%d %X"`
 echo "$NOW Started. Updating APT..."
 apt-get update && apt-get upgrade -y
