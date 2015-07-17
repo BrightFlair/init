@@ -21,7 +21,7 @@ git clone https://github.com/BrightFlair/init.git
 NOW=`date "+%Y-%m-%d %X"`
 echo "$NOW Cloned init. Adding $SERVER_TYPE scripts to next boot..."
 
-cp runonce /usr/local/bin/runonce
+cp init/runonce /usr/local/bin/runonce
 mkdir -p /etc/local/runonce.d/ran
 
 for file in init/src/$SERVER_TYPE/*.sh
