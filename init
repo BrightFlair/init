@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 set -e
 
 export SERVER_TYPE=$1
@@ -19,39 +19,26 @@ echo "$NOW Updated APT. Cloning init..."
 git clone https://github.com/BrightFlair/init.git
 
 NOW=`date "+%Y-%m-%d %X"`
-echo "$NOW Cloned init. Running start scripts..."
+echo "$NOW Cloned init. Adding $SERVER_TYPE scripts to next boot..."
 
-fileList=`ls init/src/_start/*.sh`
-for file in $fileList
+cp runonce /usr/local/bin/runonce
+mkdir -p /etc/local/runonce.d/ran
+
+for file in init/src/$SERVER_TYPE/*.sh
+do
+  NOW=`date "+%Y-%m-%d %X"`
+  echo "$NOW $file"
+  cp $file /etc/local/runonce.d/
+done
+
+echo "@reboot /usr/local/bin/runonce" | tee -a /var/spool/cron/root
+
+NOW=`date "+%Y-%m-%d %X"`
+echo "$NOW Added $SERVER_TYPE scripts to next boot. Running common scripts..."
+
+for file in init/src/_common/*.sh
 do
   NOW=`date "+%Y-%m-%d %X"`
   echo "$NOW $file"
   ./$file
 done
-
-NOW=`date "+%Y-%m-%d %X"`
-echo "$NOW Cloned init. Running $SERVER_TYPE scripts..."
-
-fileList=`ls init/src/$SERVER_TYPE/*.sh`
-for file in $fileList
-do
-  NOW=`date "+%Y-%m-%d %X"`
-  echo "$NOW $file"
-  ./$file
-done
-
-NOW=`date "+%Y-%m-%d %X"`
-echo "$NOW Complete! Running end scripts."
-
-fileList=`ls init/src/_end/*.sh`
-for file in $fileList
-do
-  NOW=`date "+%Y-%m-%d %X"`
-  echo "$NOW $file"
-  ./$file
-done
-
-NOW=`date "+%Y-%m-%d %X"`
-echo "$NOW Complete! Rebooting."
-
-reboot
