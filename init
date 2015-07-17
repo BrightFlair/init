@@ -1,55 +1,5 @@
 #!/usr/bin/env bash
-# Stop on any error.
 set -e
 # Get location of current script.
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-
-if [ $# -eq 0 ]; then
-  # If there are no arguments passed, script is running on remote server.
-  
-  # Ensure home directory is current working directory.
-  cd
-  # Download a tarball of the latest init repository.
-  curl -Lo init.tar.gz https://github.com/BrightFlair/init/tarball/master
-  # Extract the tarball to init directory.
-  cd init
-  tar -xf ../init.tar.gz
-  mv */* .
-  # Leave a file here to show it has worked:
-  touch ~/$1.initWorked
-else
-  # If any arguments are passed, script is being called manually.
-  if [ $# -lt 2 ]; then 
-    echo "Script requires at least 2 parameters:"
-    echo "INIT_TYPE HOSTNAME AMI_ID KEY_NAME INSTANCE_TYPE"
-    exit 1
-  fi
-  
-  source $DIR/functions
-  
-  # Default arguments:
-  local INIT_TYPE="$1"
-  local HOSTNAME="new-$1"
-  local AMI_ID="ami-234ecc54"
-  local KEY_NAME="BrightFlair-Admin"
-  local INSTANCE_TYPE="t2.micro"
-  
-  if [ "$2" ] ; then
-    local HOSTNAME=$2
-  fi
-  if [ "$3" ] ; then
-    local AMI_ID=$3
-  fi
-  if [ "$4" ] ; then
-    local KEY_NAME=$4
-  fi
-  if [ "$5" ] ; then
-    local INSTNACE_TYPE=$5
-  fi
-
-  echo "Preparing instance ..."  
-  launchInstance $HOSTNAME $AMI_ID $KEY_NAME $INSTANCE_TYPE
-  echo "Waiting for launch ..."
-  waitForLaunch # Uses the last-launched resource ID
-  echo "Instance launched successfully."
-fi
+touch ~/$1.initWorked
