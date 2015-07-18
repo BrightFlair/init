@@ -46,3 +46,6 @@ do
   echo "$NOW $file"
   ./$file
 done
+
+echo "DONE" > ~/$SERVER_TYPE.$SERVER_NAME.init
+reboot
